@@ -35,9 +35,24 @@ public class UserRepository {
     public User save(User user) {
         String sql = "INSERT INTO userTable (firstName,lastName) VALUES ( ?, ?)";
         jdbc.update(sql, user.getFirstName(), user.getLastName());
-        return  user;
+        return user;
     }
 
-    //public void deleteById(int id)
-    //"DELETE FROM userTable WHERE id=?"
+    public void deleteById(int id) {
+        String sql = "DELETE FROM userTable WHERE id=?";
+        jdbc.update(sql, id);
+    }
+
+    public User findById(int id) {
+        return findAll().stream()
+                .filter(x -> x.getId() == id)
+                .findFirst()
+                .get();
+
+    }
+
+    public void update(User user){
+        String sql = "UPDATE userTable SET firstName =?, lastName=? WHERE id =?";
+        jdbc.update(sql,user.getFirstName(),user.getLastName(),user.getId());
+    }
 }

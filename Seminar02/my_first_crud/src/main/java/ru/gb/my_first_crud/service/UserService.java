@@ -4,7 +4,6 @@ package ru.gb.my_first_crud.service;
 import org.springframework.stereotype.Service;
 import ru.gb.my_first_crud.model.User;
 import ru.gb.my_first_crud.repository.UserRepository;
-
 import java.util.List;
 
 @Service

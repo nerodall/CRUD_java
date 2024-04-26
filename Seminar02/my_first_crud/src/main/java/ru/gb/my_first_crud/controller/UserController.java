@@ -24,42 +24,42 @@ public class UserController {
     public String findAll(Model model) {
         List<User> users = userService.findAll();
         model.addAttribute("users", users);
-        log.info("get users to List done!");
+        //log.info("get users to List done!");
         return "user-list";
         //return "home.html";
     }
 
     @GetMapping("/user-create")
     public String createUserForm(User user) {
-        log.info("get user create done!");
+       // log.info("get user create done!");
         return "user-create";
     }
 
     @PostMapping("/user-create")
     public String createUser(User user) {
         userService.saveUser(user);
-        log.info("user save complete!");
+       // log.info("user save complete!");
         return "redirect:/users";
     }
 
     @GetMapping("user-delete/{id}")
     public String deleteUser(@PathVariable("id") int id) {
         userService.deleteById(id);
-        log.info("get user delete");
+        //log.info("get user delete");
         return "redirect:/users";
     }
 
     @GetMapping("/user-update/{id}")
     public String getUser (Model model,User user){
         model.addAttribute("users",user);
-        log.info("get user update");
+        //log.info("get user update");
         return "user-update";
     }
 
     @PostMapping("/user-update/{id}")
     public String updateUser (User user){
         userService.updateUser(user);
-        log.info("get user update by id");
+      //  log.info("get user update by id");
         return "redirect:/users";
     }
 

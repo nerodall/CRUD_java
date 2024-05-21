@@ -1,6 +1,8 @@
 package ru.gb.my_first_crud.controller;
 
 
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.Metrics;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    private final Counter addCounter = Metrics.counter("add_user");
+
     @GetMapping("/users")
     public String findAll(Model model) {
         List<User> users = userService.findAll();
@@ -38,6 +42,7 @@ public class UserController {
     @PostMapping("/user-create")
     public String createUser(User user) {
         userService.saveUser(user);
+        addCounter.increment();
        // log.info("user save complete!");
         return "redirect:/users";
     }

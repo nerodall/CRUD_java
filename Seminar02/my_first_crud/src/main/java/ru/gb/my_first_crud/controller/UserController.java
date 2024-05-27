@@ -3,6 +3,7 @@ package ru.gb.my_first_crud.controller;
 
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
+import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,15 +13,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.gb.my_first_crud.model.User;
+import ru.gb.my_first_crud.service.FileGateWay;
 import ru.gb.my_first_crud.service.UserService;
 
 import java.util.List;
 
 @Controller
 @Log
+@AllArgsConstructor
 public class UserController {
     @Autowired
     private UserService userService;
+
+    private final FileGateWay fileGateWay;
 
     private final Counter addCounter = Metrics.counter("add_user");
 
@@ -44,6 +49,7 @@ public class UserController {
         userService.saveUser(user);
         addCounter.increment();
        // log.info("user save complete!");
+        fileGateWay.writeFile("logAdded.txt",user.toString());
         return "redirect:/users";
     }
 
